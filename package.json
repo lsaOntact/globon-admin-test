@@ -20,7 +20,7 @@
   "devDependencies": {
     "gh-pages": "^6.3.0"
   },
-  "homepage": "https://lsaOntact.github.io/globon-admin-test/",
+  "homepage": "https://lsaontact.github.io/globon-admin-test/",
   "browserslist": {
     "production": [
       ">0.2%",
