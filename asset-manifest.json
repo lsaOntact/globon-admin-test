@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.js": "/globon-admin-test/static/js/main.1d8ff8c9.chunk.js",
+    "main.js.map": "/globon-admin-test/static/js/main.1d8ff8c9.chunk.js.map",
+    "runtime-main.js": "/globon-admin-test/static/js/runtime-main.8c8ced33.js",
+    "runtime-main.js.map": "/globon-admin-test/static/js/runtime-main.8c8ced33.js.map",
+    "static/js/2.49c7a9e5.chunk.js": "/globon-admin-test/static/js/2.49c7a9e5.chunk.js",
+    "static/js/2.49c7a9e5.chunk.js.map": "/globon-admin-test/static/js/2.49c7a9e5.chunk.js.map",
+    "index.html": "/globon-admin-test/index.html",
+    "static/js/2.49c7a9e5.chunk.js.LICENSE.txt": "/globon-admin-test/static/js/2.49c7a9e5.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.8c8ced33.js",
+    "static/js/2.49c7a9e5.chunk.js",
+    "static/js/main.1d8ff8c9.chunk.js"
+  ]
+}
