@@ -5,6 +5,12 @@ const Default = () => {
   const { Link } = Typography;
   return (
     <Space direction="vertical">
+      <Typography.Title level={3}>버전</Typography.Title>
+      <Paragraph>
+        React v18.3.1
+        <br />
+        Antd v5.29.1
+      </Paragraph>
       <Typography.Title level={3}>차트 라이브러리</Typography.Title>
 
       <Link
@@ -30,9 +36,10 @@ const Default = () => {
       </Link>
       <Paragraph>
         <blockquote>
-          장점: antd 개발사에서 만들어서 호환성 문제가 적습니다. 다양한 그래프를
-          지원합니다. <br />
+          장점: 다양한 그래프를 지원합니다. <br />
           단점: 문서가 중국어 위주라서 읽기가 어렵고 사용 커뮤니티가 적습니다.
+          <br />
+          antd 호환을 위한 버전 맞추기가 까다롭습니다.
         </blockquote>
       </Paragraph>
 

@@ -1,9 +1,41 @@
 import { Bar } from "@ant-design/plots";
 import { Column } from "@ant-design/plots";
 import { Typography } from "antd";
-import { columnData, data } from "./data";
+import { columnData, data, ChartJsData } from "./data";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
+import { Bar as ChartJsBar } from "react-chartjs-2";
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 const BarChartList = () => {
+  const options = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: "top",
+      },
+      title: {
+        display: true,
+        text: "Chart.js Bar Chart",
+      },
+    },
+  };
+
   const barConfig = {
     data,
     xField: "label",
@@ -34,13 +66,17 @@ const BarChartList = () => {
   };
   return (
     <>
-      <Typography.Title level={3}>가로 바 차트(Antd)</Typography.Title>
+      <Typography.Title level={3}>바 차트1(Antd)</Typography.Title>
       <div>
         <Bar {...barConfig} />
       </div>
-      <Typography.Title level={3}>세로 바 차트(Antd)</Typography.Title>
+      <Typography.Title level={3}>바 차트2(Antd)</Typography.Title>
       <div>
         <Column {...columnConfig} />
+      </div>
+      <Typography.Title level={3}>바 차트3(Chart.js)</Typography.Title>
+      <div>
+        <ChartJsBar options={options} data={ChartJsData} />
       </div>
     </>
   );

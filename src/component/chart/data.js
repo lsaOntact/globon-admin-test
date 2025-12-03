@@ -146,4 +146,26 @@ export const columnData = [
   // 31일
   { day: "31", type: "신규방문", value: 530 },
   { day: "31", type: "재방문", value: 940 },
-]; 
+];
+
+const labels = ["January", "February", "March", "April", "May", "June", "July"];
+
+const generateRandomData = () => {
+  return labels.map(() => Math.floor(Math.random() * 1000));
+};
+
+export const ChartJsData = {
+  labels,
+  datasets: [
+    {
+      label: "Dataset 1",
+      data: generateRandomData(),
+      backgroundColor: "rgba(255, 99, 132, 0.5)",
+    },
+    {
+      label: "Dataset 2",
+      data: generateRandomData(),
+      backgroundColor: "rgba(53, 162, 235, 0.5)",
+    },
+  ],
+};
