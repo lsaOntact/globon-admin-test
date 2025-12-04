@@ -1,7 +1,11 @@
-import { Bar } from "@ant-design/plots";
-import { Column } from "@ant-design/plots";
-import { Typography } from "antd";
-import { columnData, data, ChartJsData } from "./data";
+import { Column as AntdColumn, DualAxes } from "@ant-design/plots";
+import { Flex, Typography } from "antd";
+import {
+  AntdColumnData,
+  ChartJsBarData,
+  ChartJsMultipleData,
+  dualAxesData,
+} from "./data";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -10,8 +14,13 @@ import {
   Title,
   Tooltip,
   Legend,
+  PointElement,
+  LineElement,
+  LineController,
+  BarController,
 } from "chart.js";
-import { Bar as ChartJsBar } from "react-chartjs-2";
+import { Bar as ChartJsBar, Chart as ChartJsMultiple } from "react-chartjs-2";
+import { RechartMultipleBar, RechartSimpleBar } from "./RechartBar";
 
 ChartJS.register(
   CategoryScale,
@@ -19,7 +28,11 @@ ChartJS.register(
   BarElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
+  PointElement,
+  LineElement,
+  LineController,
+  BarController
 );
 
 const BarChartList = () => {
@@ -36,24 +49,45 @@ const BarChartList = () => {
     },
   };
 
-  const barConfig = {
-    data,
-    xField: "label",
-    yField: "value",
-    colorField: "type",
-    scale: {
-      x: {
-        padding: 0.5,
+  const dualAxesConfig = {
+    xField: "month",
+    data: dualAxesData,
+    legend: {
+      color: {
+        order: ["data1", "data2", "data3"],
+        itemMarker: (v) => {
+          if (v === "data1") return "rect";
+          return "smooth";
+        },
       },
     },
-    group: true,
-    style: {
-      height: 10,
-    },
+    scale: { y: { domainMax: 10 } },
+    children: [
+      {
+        type: "area",
+        yField: "data3",
+        shapeField: "smooth",
+        scale: { color: { relations: [["data3", "#82ca9d"]] } },
+        style: { fillOpacity: 0.3 },
+      },
+      {
+        type: "interval",
+        yField: "data1",
+        scale: { color: { relations: [["data1", "#3d54ffff"]] } },
+      },
+      {
+        type: "line",
+        yField: "data2",
+        shapeField: "smooth",
+        scale: { color: { relations: [["data2", "#fdae6b"]] } },
+        axis: { y: { position: "right" } },
+        style: { lineWidth: 2, stroke: "#fdae6b" },
+      },
+    ],
   };
 
   const columnConfig = {
-    data: columnData,
+    data: AntdColumnData,
     xField: "day",
     yField: "value",
     colorField: "type",
@@ -64,20 +98,34 @@ const BarChartList = () => {
     },
     group: true,
   };
+
   return (
     <>
-      <Typography.Title level={3}>바 차트1(Antd)</Typography.Title>
-      <div>
-        <Bar {...barConfig} />
-      </div>
-      <Typography.Title level={3}>바 차트2(Antd)</Typography.Title>
-      <div>
-        <Column {...columnConfig} />
-      </div>
-      <Typography.Title level={3}>바 차트3(Chart.js)</Typography.Title>
-      <div>
-        <ChartJsBar options={options} data={ChartJsData} />
-      </div>
+      <Typography.Title level={3}>Antd chart</Typography.Title>
+      <Flex>
+        <DualAxes {...dualAxesConfig} />
+        <AntdColumn {...columnConfig} />
+      </Flex>
+
+      <Typography.Title level={3}>Chart.js</Typography.Title>
+      <Flex>
+        <div style={{ flex: 1 }}>
+          <ChartJsMultiple
+            type="bar"
+            data={ChartJsMultipleData}
+            options={options}
+          />
+        </div>
+        <div style={{ flex: 1 }}>
+          <ChartJsBar options={options} data={ChartJsBarData} />
+        </div>
+      </Flex>
+
+      <Typography.Title level={3}>Rechart</Typography.Title>
+      <Flex>
+        <RechartMultipleBar />
+        <RechartSimpleBar />
+      </Flex>
     </>
   );
 };
