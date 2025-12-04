@@ -26,14 +26,14 @@ export const RechartMultipleBar = () => {
     <ResponsiveContainer {...sizes}>
       <ComposedChart data={RechartMultipleData} width={"auto"} height={"auto"}>
         <CartesianGrid stroke="#f5f5f5" />
-        <XAxis dataKey="name" scale="band" />
+        <XAxis dataKey="name" />
         <YAxis width="auto" />
         <Tooltip />
         <Legend />
         <Line type="monotone" dataKey="data1" stroke="#ff7300" />
         <Bar dataKey="data2" barSize={20} fill="#413ea0" />
         <Area type="monotone" dataKey="data3" fill="#8884d8" stroke="#8884d8" />
-        <Scatter dataKey="data4" fill="red" />
+        <Scatter dataKey="data4" fill="#ff0000" name="data4" />
       </ComposedChart>
     </ResponsiveContainer>
   );
