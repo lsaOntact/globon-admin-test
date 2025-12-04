@@ -1,7 +1,8 @@
-import { Menu, Flex, Layout } from "antd";
+import { Menu, Layout } from "antd";
 import BarChartList from "./component/chart/BarChartList";
 import { useState } from "react";
 import Default from "./component/Default";
+import ContentManage from "./component/contentManage/ContentManage";
 
 const { Sider, Content } = Layout;
 
@@ -15,6 +16,8 @@ function App() {
         return <BarChartList />;
       case "line":
         return <></>;
+      case "item2":
+        return <ContentManage />;
       default:
         return <></>;
     }

@@ -79,7 +79,7 @@ const BarChartList = () => {
       {
         type: "interval",
         yField: "data1",
-        style: { fill: "#3d54ffff", width: 20 },
+        style: { fill: "#3d54ffff", maxWidth: 20 },
       },
       {
         type: "line",
