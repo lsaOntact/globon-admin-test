@@ -2,7 +2,7 @@ import { Menu, Layout } from "antd";
 import BarChartList from "./component/chart/BarChartList";
 import { useState } from "react";
 import Default from "./component/Default";
-import ContentManage from "./component/contentManage/ContentManage";
+import CardNews from "./component/contentManage/CardNews";
 
 const { Sider, Content } = Layout;
 
@@ -16,8 +16,10 @@ function App() {
         return <BarChartList />;
       case "line":
         return <></>;
-      case "item2":
-        return <ContentManage />;
+      case "cardNews":
+        return <CardNews />;
+      case "routine":
+        return <></>;
       default:
         return <></>;
     }
@@ -51,7 +53,20 @@ function App() {
         // },
       ],
     },
-    { key: "item2", label: "컨텐츠 관리" },
+    {
+      key: "item2",
+      label: "컨텐츠 관리",
+      children: [
+        {
+          key: "cardNews",
+          label: "카드뉴스 관리",
+        },
+        {
+          key: "routine",
+          label: "루틴 관리",
+        },
+      ],
+    },
   ];
   return (
     <Layout style={layoutStyle}>
@@ -60,7 +75,7 @@ function App() {
           onClick={(e) => setSelectMenu(e.key)}
           style={{ width: "100%" }}
           defaultSelectedKeys={selectMenu}
-          defaultOpenKeys={["item1"]}
+          defaultOpenKeys={["item1", "item2"]}
           mode="inline"
           items={items}
         />

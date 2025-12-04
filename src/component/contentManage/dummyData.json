@@ -1,0 +1,92 @@
+[
+  {
+    "no": 1,
+    "id": 1,
+    "category": "카테고리1",
+    "title": "수면에 좋은 음식 알아보기",
+    "imageCount": 6,
+    "likes": 2,
+    "visible": "visible",
+    "registDate": "2025-03-15"
+  },
+  {
+    "no": 2,
+    "id": 2,
+    "category": "카테고리2",
+    "title": "혈당건강 알아보기",
+    "imageCount": 6,
+    "likes": 1,
+    "visible": "visible",
+    "registDate": "2025-04-22"
+  },
+  {
+    "no": 3,
+    "id": 3,
+    "category": "카테고리3",
+    "title": "혈당건강 알아보기",
+    "imageCount": 7,
+    "likes": 5,
+    "visible": "non-visible",
+    "registDate": "2025-05-08"
+  },
+  {
+    "no": 4,
+    "id": 4,
+    "category": "카테고리4",
+    "title": "혈당건강 알아보기",
+    "imageCount": 7,
+    "likes": 0,
+    "visible": "visible",
+    "registDate": "2025-06-10"
+  },
+  {
+    "no": 5,
+    "id": 5,
+    "category": "카테고리1",
+    "title": "심장 건강을 위한 운동",
+    "imageCount": 5,
+    "likes": 0,
+    "visible": "delete",
+    "registDate": "2025-07-03"
+  },
+  {
+    "no": 6,
+    "id": 6,
+    "category": "카테고리2",
+    "title": "스트레스 관리 방법",
+    "imageCount": 4,
+    "likes": 0,
+    "visible": "visible",
+    "registDate": "2025-08-19"
+  },
+  {
+    "no": 7,
+    "id": 7,
+    "category": "카테고리3",
+    "title": "영양소의 중요성",
+    "imageCount": 5,
+    "likes": 4,
+    "visible": "non-visible",
+    "registDate": "2025-09-25"
+  },
+  {
+    "no": 8,
+    "id": 8,
+    "category": "카테고리4",
+    "title": "면역력 향상 음식",
+    "imageCount": 7,
+    "likes": 12,
+    "visible": "visible",
+    "registDate": "2025-10-11"
+  },
+  {
+    "no": 9,
+    "id": 9,
+    "category": "카테고리1",
+    "title": "건강한 간식을 만드는 법",
+    "imageCount": 5,
+    "likes": 1,
+    "visible": "delete",
+    "registDate": "2025-11-30"
+  }
+]
