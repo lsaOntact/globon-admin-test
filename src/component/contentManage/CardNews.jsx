@@ -3,7 +3,7 @@ import dummyData from "./dummyData.json";
 import { RedoOutlined } from "@ant-design/icons";
 import { Button, Form, Flex, Typography, Select, Table, Tag } from "antd";
 import Link from "antd/es/typography/Link";
-import CardDetailModal from "./modal/CardDetailModal";
+import CardEditModal from "./modal/CardEditModal";
 import { categoryOptions, visibleOptions, selectStyle } from "./settings";
 
 const CardNews = () => {
@@ -147,7 +147,7 @@ const CardNews = () => {
       />
 
       {/* Modal */}
-      <CardDetailModal
+      <CardEditModal
         open={isModalOpen}
         onCancel={handleCloseModal}
         data={selectedCard}
