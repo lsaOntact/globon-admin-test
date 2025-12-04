@@ -11,6 +11,7 @@ const Default = () => {
         <br />
         Antd v5.29.1
       </Paragraph>
+
       <Typography.Title level={3}>차트 라이브러리</Typography.Title>
 
       <Link
@@ -52,11 +53,20 @@ const Default = () => {
       <Paragraph>
         <blockquote>
           장점: 컴포넌트 방식으로 사용하며, 리액트 프로젝트에 친화적입니다.
-          커스터마이징이 자유로운 편입니다. npm 다운로드 수도 많은 편입니다.
+          커스터마이징이 자유로운 편입니다.
           <br />
           단점: 디자인이 위 2개에 비해서 예쁘진 않고 애니메이션도 적습니다.
         </blockquote>
       </Paragraph>
+      <p>
+        참고:
+        <Link
+          target="_blank"
+          href="https://npm-compare.com/ko-KR/@ant-design/charts,chart.js,recharts"
+        >
+          npm-compare.com
+        </Link>
+      </p>
     </Space>
   );
 };
