@@ -42,10 +42,10 @@ function App() {
           key: "bar",
           label: "bar",
         },
-        {
-          key: "line",
-          label: "line",
-        },
+        // {
+        //   key: "line",
+        //   label: "line",
+        // },
       ],
     },
     { key: "item2", label: "컨텐츠 관리" },

@@ -61,25 +61,30 @@ const BarChartList = () => {
         },
       },
     },
-    scale: { y: { domainMax: 10 } },
+    scale: {
+      y: { domainMax: 10 },
+      color: {
+        domain: ["data1", "data2", "data3"],
+        range: ["#3d54ffff", "#fdae6b", "#82ca9d"],
+      },
+    },
     children: [
       {
         type: "area",
         yField: "data3",
         shapeField: "smooth",
-        scale: { color: { relations: [["data3", "#82ca9d"]] } },
-        style: { fillOpacity: 0.3 },
+        style: { fillOpacity: 0.3, fill: "#82ca9d", stroke: "#82ca9d" },
+        axis: { y: false },
       },
       {
         type: "interval",
         yField: "data1",
-        scale: { color: { relations: [["data1", "#3d54ffff"]] } },
+        style: { fill: "#3d54ffff", width: 20 },
       },
       {
         type: "line",
         yField: "data2",
         shapeField: "smooth",
-        scale: { color: { relations: [["data2", "#fdae6b"]] } },
         axis: { y: { position: "right" } },
         style: { lineWidth: 2, stroke: "#fdae6b" },
       },
