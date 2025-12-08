@@ -5,6 +5,7 @@ import { Button, Form, Flex, Typography, Select, Table, Tag } from "antd";
 import Link from "antd/es/typography/Link";
 import CardFormModal from "./modal/CardFormModal";
 import { categoryOptions, visibleOptions, selectStyle } from "./settings";
+import CategoryEditModal from "./modal/CategoryEditModal";
 
 const CardNews = () => {
   const [form] = Form.useForm();
@@ -13,11 +14,12 @@ const CardNews = () => {
     visible: "all",
   });
   const [filteredData, setFilteredData] = useState(dummyData);
-  const [modalInfo, setModalInfo] = useState({
+  const [cardFormModalInfo, setCardFormModalInfo] = useState({
     open: false,
     type: null,
     id: null,
   });
+  const [categoryModalOpen, setCategoryModalOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState(null);
 
   const onChangeOption = (name) => (val) => {
@@ -43,14 +45,14 @@ const CardNews = () => {
   };
 
   const handleOpenModal = (type, record) => {
-    setModalInfo({ open: true, type, id: record ? record.id : null });
+    setCardFormModalInfo({ open: true, type, id: record ? record.id : null });
     if (record) {
       setSelectedCard(record);
     }
   };
 
   const handleCloseModal = () => {
-    setModalInfo({ open: false, type: null, id: null });
+    setCardFormModalInfo({ open: false, type: null, id: null });
     setSelectedCard(null);
   };
 
@@ -139,7 +141,9 @@ const CardNews = () => {
 
         {/* Button */}
         <Flex gap={10}>
-          <Button>카테고리 편집</Button>
+          <Button onClick={() => setCategoryModalOpen(true)}>
+            카테고리 편집
+          </Button>
           <Button onClick={() => handleOpenModal("add")}>카드뉴스 추가</Button>
         </Flex>
       </Flex>
@@ -155,10 +159,15 @@ const CardNews = () => {
 
       {/* Modal */}
       <CardFormModal
-        open={modalInfo.open}
+        open={cardFormModalInfo.open}
         onCancel={handleCloseModal}
         data={selectedCard}
-        type={modalInfo.type}
+        type={cardFormModalInfo.type}
+      />
+
+      <CategoryEditModal
+        open={categoryModalOpen}
+        onCancel={() => setCategoryModalOpen(false)}
       />
     </>
   );

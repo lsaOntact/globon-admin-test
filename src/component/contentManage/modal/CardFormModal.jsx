@@ -9,6 +9,7 @@ import {
   Space,
   Upload,
   message,
+  Popconfirm,
 } from "antd";
 import { UploadOutlined, InboxOutlined } from "@ant-design/icons";
 import { visibleOptions, selectStyle, categoryOptions } from "../settings";
@@ -37,6 +38,7 @@ const IMAGE_CONFIGS = {
  */
 const CardFormModal = ({ open, onCancel, data, type = "add" }) => {
   const isEditMode = type === "edit";
+  const isDeleted = data?.visible === "delete";
   const modalTitle = isEditMode ? "카드뉴스 수정" : "카드뉴스 등록";
 
   const [formData, setFormData] = useState({
@@ -150,9 +152,15 @@ const CardFormModal = ({ open, onCancel, data, type = "add" }) => {
       footer={
         <Flex justify="space-between">
           {isEditMode && (
-            <Button danger onClick={handleDelete}>
-              삭제
-            </Button>
+            <Popconfirm
+              description="정말 삭제하시겠습니까?"
+              onConfirm={handleDelete}
+              onCancel={() => console.log("cancel")}
+              okText="확인"
+              cancelText="취소"
+            >
+              <Button danger>삭제</Button>
+            </Popconfirm>
           )}
           {!isEditMode && <div />}
           <Button
@@ -160,6 +168,7 @@ const CardFormModal = ({ open, onCancel, data, type = "add" }) => {
             type="primary"
             loading={false}
             onClick={handleSave}
+            disabled={isDeleted}
           >
             저장
           </Button>
@@ -196,6 +205,7 @@ const CardFormModal = ({ open, onCancel, data, type = "add" }) => {
             options={visibleOptions.filter((item) => item.value !== "all")}
             value={formData.visible}
             onChange={(value) => updateFormData("visible", value)}
+            disabled={isDeleted}
           />
 
           <strong>카테고리</strong>
@@ -204,6 +214,7 @@ const CardFormModal = ({ open, onCancel, data, type = "add" }) => {
             options={categoryOptions.filter((item) => item.value !== "all")}
             value={formData.category}
             onChange={(value) => updateFormData("category", value)}
+            disabled={isDeleted}
           />
 
           <strong>제목</strong>
@@ -211,6 +222,7 @@ const CardFormModal = ({ open, onCancel, data, type = "add" }) => {
             value={formData.title}
             onChange={(e) => updateFormData("title", e.target.value)}
             maxLength={50}
+            disabled={isDeleted}
           />
 
           <strong>{IMAGE_CONFIGS.thumbnail.label}</strong>
@@ -218,6 +230,7 @@ const CardFormModal = ({ open, onCancel, data, type = "add" }) => {
             preview={formData.thumbnailPreview}
             setPreview={(value) => updateFormData("thumbnailPreview", value)}
             size={IMAGE_CONFIGS.thumbnail.size}
+            disabled={isDeleted}
           />
 
           <strong>{IMAGE_CONFIGS.cover.label}</strong>
@@ -225,6 +238,7 @@ const CardFormModal = ({ open, onCancel, data, type = "add" }) => {
             preview={formData.coverPreview}
             setPreview={(value) => updateFormData("coverPreview", value)}
             size={IMAGE_CONFIGS.cover.size}
+            disabled={isDeleted}
           />
 
           <strong>카드 뉴스 본문</strong>
@@ -238,6 +252,7 @@ const CardFormModal = ({ open, onCancel, data, type = "add" }) => {
               setCardNewsFiles={(value) =>
                 updateFormData("cardNewsFiles", value)
               }
+              disabled={isDeleted}
             />
           </Space>
         </div>
@@ -246,7 +261,7 @@ const CardFormModal = ({ open, onCancel, data, type = "add" }) => {
   );
 };
 
-const ImageUpload = ({ preview, setPreview, size }) => {
+const ImageUpload = ({ preview, setPreview, size, disabled }) => {
   const [fileList, setFileList] = useState([]);
   useEffect(() => {
     if (preview === null) {
@@ -265,6 +280,7 @@ const ImageUpload = ({ preview, setPreview, size }) => {
         }}
         maxCount={1}
         accept="image/*"
+        disabled={disabled}
         onRemove={() => {
           if (preview) {
             URL.revokeObjectURL(preview);
@@ -273,7 +289,9 @@ const ImageUpload = ({ preview, setPreview, size }) => {
           setFileList([]);
         }}
       >
-        <Button icon={<UploadOutlined />}>이미지 추가하기</Button>
+        <Button icon={<UploadOutlined />} disabled={disabled}>
+          이미지 추가하기
+        </Button>
       </Upload>
 
       <Image
@@ -289,7 +307,7 @@ const ImageUpload = ({ preview, setPreview, size }) => {
   );
 };
 
-const Dragger = ({ cardNewsFiles, setCardNewsFiles }) => {
+const Dragger = ({ cardNewsFiles, setCardNewsFiles, disabled }) => {
   const props = {
     name: "multiple file",
     multiple: true,
@@ -297,6 +315,7 @@ const Dragger = ({ cardNewsFiles, setCardNewsFiles }) => {
     listType: "picture-card",
     accept: "image/*",
     fileList: cardNewsFiles,
+    disabled,
     showUploadList: {
       showPreviewIcon: false,
     },
