@@ -1,26 +1,24 @@
 import { useState } from "react";
-import dummyData from "./dummyNewsData.json";
+import dummyData from "./dummyRoutineData.json";
 import { RedoOutlined } from "@ant-design/icons";
 import { Button, Form, Flex, Typography, Select, Table, Tag } from "antd";
 import Link from "antd/es/typography/Link";
-import CardFormModal from "./modal/CardFormModal";
-import { categoryOptions, visibleOptions, selectStyle } from "./settings";
-import CategoryEditModal from "./modal/CategoryEditModal";
+import { visibleOptions, selectStyle, goalOptions } from "./settings";
 
-const CardNews = () => {
+const Routine = () => {
   const [form] = Form.useForm();
   const [filterOptions, setFilterOptions] = useState({
-    category: "all",
+    goal: "all",
     visible: "all",
   });
   const [filteredData, setFilteredData] = useState(dummyData);
-  const [cardFormModalInfo, setCardFormModalInfo] = useState({
+  const [routineFormModalInfo, setRoutineFormModalInfo] = useState({
     open: false,
     type: null,
     id: null,
   });
-  const [categoryModalOpen, setCategoryModalOpen] = useState(false);
-  const [selectedCard, setSelectedCard] = useState(null);
+
+  const [selectedGoal, setSelectedGoal] = useState(null);
 
   const onChangeOption = (name) => (val) => {
     setFilterOptions((prev) => ({ ...prev, [name]: val }));
@@ -28,55 +26,43 @@ const CardNews = () => {
 
   const onClickSearch = () => {
     const filtered = dummyData.filter((item) => {
-      const categoryMatch =
-        filterOptions.category === "all" ||
-        item.category === filterOptions.category;
+      const goalMatch =
+        filterOptions.goal === "all" || item.goal === filterOptions.goal;
       const visibleMatch =
         filterOptions.visible === "all" ||
         item.visible === filterOptions.visible;
-      return categoryMatch && visibleMatch;
+      return goalMatch && visibleMatch;
     });
     setFilteredData(filtered);
   };
 
   const onClickReset = () => {
-    setFilterOptions({ category: "all", visible: "all" });
+    setFilterOptions({ goal: "all", visible: "all" });
     setFilteredData(dummyData);
   };
 
   const handleOpenModal = (type, record) => {
-    setCardFormModalInfo({ open: true, type, id: record ? record.id : null });
+    setRoutineFormModalInfo({
+      open: true,
+      type,
+      id: record ? record.id : null,
+    });
     if (record) {
-      setSelectedCard(record);
+      setSelectedGoal(record);
     }
   };
 
   const handleCloseModal = () => {
-    setCardFormModalInfo({ open: false, type: null, id: null });
-    setSelectedCard(null);
+    setRoutineFormModalInfo({ open: false, type: null, id: null });
+    setSelectedGoal(null);
   };
 
   const dataColumn = [
     { title: "No", dataIndex: "no", key: "no", align: "center", width: 80 },
     {
-      title: "카테고리",
-      dataIndex: "category",
-      key: "category",
-      sorter: (a, b) => a.category.localeCompare(b.category),
-    },
-    {
-      title: "제목",
-      dataIndex: "title",
-      key: "title",
-      sorter: (a, b) => a.title.localeCompare(b.title),
-      render: (title, record) => (
-        <Link onClick={() => handleOpenModal("edit", record)}>{title}</Link>
-      ),
-    },
-    { title: "이미지 수", dataIndex: "imageCount", key: "imageCount" },
-    { title: "찜 횟수", dataIndex: "likes", key: "likes" },
-    {
       title: "공개상태",
+      width: 120,
+      align: "center",
       dataIndex: "visible",
       key: "visible",
       render: (value) => (
@@ -84,25 +70,45 @@ const CardNews = () => {
       ),
     },
     {
+      title: "건강목표",
+      dataIndex: "goal",
+      key: "goal",
+    },
+    {
+      title: "단계",
+      dataIndex: "step",
+      key: "step",
+    },
+    {
+      title: "루틴",
+      width: "40%",
+      dataIndex: "routine",
+      key: "routine",
+      sorter: (a, b) => a.routine.localeCompare(b.routine),
+      render: (routine, record) => (
+        <Link onClick={() => handleOpenModal("edit", record)}>{routine}</Link>
+      ),
+    },
+    {
       title: "등록일",
-      dataIndex: "registDate",
-      key: "registDate",
-      sorter: (a, b) => new Date(a.registDate) - new Date(b.registDate),
+      dataIndex: "date",
+      key: "date",
+      sorter: (a, b) => new Date(a.date) - new Date(b.date),
     },
   ];
 
   return (
     <>
-      <Typography.Title level={3}>카드뉴스 관리</Typography.Title>
+      <Typography.Title level={3}>루틴 관리</Typography.Title>
       {/* Filter */}
       <Flex justify="space-between" style={{ marginBottom: 30 }}>
         <Form layout="inline" form={form}>
-          <Form.Item label={"카테고리"} colon={false}>
+          <Form.Item label={"건강목표"} colon={false}>
             <Select
-              options={categoryOptions}
-              value={filterOptions.category}
+              options={goalOptions}
+              value={filterOptions.goal}
               style={selectStyle}
-              onChange={onChangeOption("category")}
+              onChange={onChangeOption("goal")}
             />
           </Form.Item>
           <Form.Item label="공개상태" colon={false}>
@@ -127,10 +133,7 @@ const CardNews = () => {
 
         {/* Button */}
         <Flex gap={10}>
-          <Button onClick={() => setCategoryModalOpen(true)}>
-            카테고리 편집
-          </Button>
-          <Button onClick={() => handleOpenModal("add")}>카드뉴스 추가</Button>
+          <Button onClick={() => setCategoryModalOpen(true)}>루틴 추가</Button>
         </Flex>
       </Flex>
 
@@ -144,19 +147,8 @@ const CardNews = () => {
       />
 
       {/* Modal */}
-      <CardFormModal
-        open={cardFormModalInfo.open}
-        onCancel={handleCloseModal}
-        data={selectedCard}
-        type={cardFormModalInfo.type}
-      />
-
-      <CategoryEditModal
-        open={categoryModalOpen}
-        onCancel={() => setCategoryModalOpen(false)}
-      />
     </>
   );
 };
 
-export default CardNews;
+export default Routine;

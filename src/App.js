@@ -3,6 +3,7 @@ import BarChartList from "./component/chart/BarChartList";
 import { useState } from "react";
 import Default from "./component/Default";
 import CardNews from "./component/contentManage/CardNews";
+import Routine from "./component/contentManage/Routine";
 
 const { Sider, Content } = Layout;
 
@@ -19,7 +20,7 @@ function App() {
       case "cardNews":
         return <CardNews />;
       case "routine":
-        return <></>;
+        return <Routine />;
       default:
         return <></>;
     }

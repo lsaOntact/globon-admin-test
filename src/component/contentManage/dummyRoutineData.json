@@ -1,0 +1,82 @@
+[
+  {
+    "no": 1,
+    "goal": "혈당관리",
+    "step": "step1",
+    "routine": "식사할 때, 밥 반 공기만 먹기",
+    "date": "2025-05-08",
+    "visible": true
+  },
+  {
+    "no": 2,
+    "goal": "혈당관리",
+    "step": "step2",
+    "routine": "하루 한번, 식이섬유 먹기",
+    "date": "2025-05-08",
+    "visible": false
+  },
+  {
+    "no": 3,
+    "goal": "혈당관리",
+    "step": "step3",
+    "routine": "당분 낮은 과일 골라 먹기",
+    "date": "2025-05-08",
+    "visible": true
+  },
+  {
+    "no": 4,
+    "goal": "혈압관리",
+    "step": "step1",
+    "routine": "당분 낮은 과일 골라 먹기",
+    "date": "2025-05-08",
+    "visible": false
+  },
+  {
+    "no": 5,
+    "goal": "혈압관리",
+    "step": "step2",
+    "routine": "당분 낮은 과일 골라 먹기",
+    "date": "2025-05-08",
+    "visible": true
+  },
+  {
+    "no": 6,
+    "goal": "혈압관리",
+    "step": "step2",
+    "routine": "당분 낮은 과일 골라 먹기",
+    "date": "2025-05-08",
+    "visible": true
+  },
+  {
+    "no": 7,
+    "goal": "눈 건강",
+    "step": "-",
+    "routine": "당분 낮은 과일 골라 먹기",
+    "date": "2025-05-08",
+    "visible": false
+  },
+  {
+    "no": 8,
+    "goal": "눈 건강",
+    "step": "-",
+    "routine": "당분 낮은 과일 골라 먹기",
+    "date": "2025-05-08",
+    "visible": true
+  },
+  {
+    "no": 9,
+    "goal": "눈 건강",
+    "step": "-",
+    "routine": "당분 낮은 과일 골라 먹기",
+    "date": "2025-05-08",
+    "visible": false
+  },
+  {
+    "no": 10,
+    "goal": "눈 건강",
+    "step": "-",
+    "routine": "당분 낮은 과일 골라 먹기",
+    "date": "2025-05-08",
+    "visible": true
+  }
+]

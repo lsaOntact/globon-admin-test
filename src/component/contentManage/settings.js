@@ -8,9 +8,15 @@ export const categoryOptions = [
 
 export const visibleOptions = [
   { value: "all", label: "전체" },
-  { value: "visible", label: "공개" },
-  { value: "non-visible", label: "비공개" },
-  { value: "delete", label: "삭제" },
+  { value: true, label: "공개" },
+  { value: false, label: "비공개" },
+];
+
+export const goalOptions = [
+  { value: "all", label: "전체" },
+  { value: "혈당관리", label: "혈당관리" },
+  { value: "혈압관리", label: "혈압관리" },
+  { value: "눈 건강", label: "눈 건강" },
 ];
 
 export const selectStyle = { width: 150 };
