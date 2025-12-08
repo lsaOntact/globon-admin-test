@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import dummyData from "./dummyData.json";
 import { RedoOutlined } from "@ant-design/icons";
 import { Button, Form, Flex, Typography, Select, Table, Tag } from "antd";
 import Link from "antd/es/typography/Link";
-import CardEditModal from "./modal/CardEditModal";
+import CardFormModal from "./modal/CardFormModal";
 import { categoryOptions, visibleOptions, selectStyle } from "./settings";
 
 const CardNews = () => {
@@ -13,7 +13,11 @@ const CardNews = () => {
     visible: "all",
   });
   const [filteredData, setFilteredData] = useState(dummyData);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalInfo, setModalInfo] = useState({
+    open: false,
+    type: null,
+    id: null,
+  });
   const [selectedCard, setSelectedCard] = useState(null);
 
   const onChangeOption = (name) => (val) => {
@@ -38,13 +42,15 @@ const CardNews = () => {
     setFilteredData(dummyData);
   };
 
-  const handleOpenModal = (record) => {
-    setSelectedCard(record);
-    setIsModalOpen(true);
+  const handleOpenModal = (type, record) => {
+    setModalInfo({ open: true, type, id: record ? record.id : null });
+    if (record) {
+      setSelectedCard(record);
+    }
   };
 
   const handleCloseModal = () => {
-    setIsModalOpen(false);
+    setModalInfo({ open: false, type: null, id: null });
     setSelectedCard(null);
   };
 
@@ -62,7 +68,7 @@ const CardNews = () => {
       key: "title",
       sorter: (a, b) => a.title.localeCompare(b.title),
       render: (title, record) => (
-        <Link onClick={() => handleOpenModal(record)}>{title}</Link>
+        <Link onClick={() => handleOpenModal("edit", record)}>{title}</Link>
       ),
     },
     { title: "이미지 수", dataIndex: "imageCount", key: "imageCount" },
@@ -96,6 +102,7 @@ const CardNews = () => {
       sorter: (a, b) => new Date(a.registDate) - new Date(b.registDate),
     },
   ];
+
   return (
     <>
       <Typography.Title level={3}>카드뉴스 관리</Typography.Title>
@@ -133,7 +140,7 @@ const CardNews = () => {
         {/* Button */}
         <Flex gap={10}>
           <Button>카테고리 편집</Button>
-          <Button>카드뉴스 추가</Button>
+          <Button onClick={() => handleOpenModal("add")}>카드뉴스 추가</Button>
         </Flex>
       </Flex>
 
@@ -147,10 +154,11 @@ const CardNews = () => {
       />
 
       {/* Modal */}
-      <CardEditModal
-        open={isModalOpen}
+      <CardFormModal
+        open={modalInfo.open}
         onCancel={handleCloseModal}
         data={selectedCard}
+        type={modalInfo.type}
       />
     </>
   );
