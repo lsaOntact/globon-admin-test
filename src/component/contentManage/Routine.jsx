@@ -73,6 +73,7 @@ const Routine = () => {
       title: "건강목표",
       dataIndex: "goal",
       key: "goal",
+      sorter: (a, b) => a.goal.localeCompare(b.goal),
     },
     {
       title: "단계",

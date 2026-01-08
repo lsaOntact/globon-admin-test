@@ -57,7 +57,7 @@ const CardFormModal = ({ open, onCancel, data, type = "add" }) => {
       setFormData({
         visible:
           visibleOptions.find((item) => item.value == data.visible)?.value ||
-          "visible",
+          true,
         category:
           categoryOptions.find((item) => item.value == data.category)?.value ||
           "카테고리1",
@@ -68,7 +68,7 @@ const CardFormModal = ({ open, onCancel, data, type = "add" }) => {
       });
     } else {
       setFormData({
-        visible: "visible",
+        visible: true,
         category: "카테고리1",
         title: "",
         thumbnailPreview: null,
@@ -170,24 +170,22 @@ const CardFormModal = ({ open, onCancel, data, type = "add" }) => {
             onClick={handleSave}
             disabled={isDeleted}
           >
-            저장
+            {isEditMode ? "수정" : "추가"}
           </Button>
         </Flex>
       }
       width={700}
     >
       <>
-        {isEditMode && data && (
+        {isEditMode && (
           <Flex gap={20} justify="flex-end">
             <p>
-              <strong>등록일:</strong> {data.registDate}
+              <strong>등록일:</strong> {data.registDate || "-"}
             </p>
 
-            {data.updateDate && (
-              <p>
-                <strong>수정일:</strong> {data.updateDate}
-              </p>
-            )}
+            <p>
+              <strong>수정일:</strong> {data.updateDate || "-"}
+            </p>
           </Flex>
         )}
 
