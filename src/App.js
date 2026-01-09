@@ -5,7 +5,7 @@ import CardNews from "./component/contentManage/CardNews";
 import Routine from "./component/contentManage/Routine";
 import CalanderPage from "./component/component/CalanderPage";
 import {
-  BrowserRouter,
+  HashRouter,
   Routes,
   Route,
   useNavigate,
@@ -123,9 +123,9 @@ function AppContent() {
 
 function App() {
   return (
-    <BrowserRouter basename="/globon-admin-test">
+    <HashRouter>
       <AppContent />
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
