@@ -4,6 +4,7 @@ import { useState } from "react";
 import Default from "./component/Default";
 import CardNews from "./component/contentManage/CardNews";
 import Routine from "./component/contentManage/Routine";
+import CalanderPage from "./component/component/CalanderPage";
 
 const { Sider, Content } = Layout;
 
@@ -21,6 +22,8 @@ function App() {
         return <CardNews />;
       case "routine":
         return <Routine />;
+      case "calander":
+        return <CalanderPage />;
       default:
         return <></>;
     }
@@ -65,6 +68,16 @@ function App() {
         {
           key: "routine",
           label: "루틴 관리",
+        },
+      ],
+    },
+    {
+      key: "component",
+      label: "컴포넌트",
+      children: [
+        {
+          key: "calander",
+          label: "캘린더",
         },
       ],
     },
