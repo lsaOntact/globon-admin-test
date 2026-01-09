@@ -123,7 +123,7 @@ function AppContent() {
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/globon-admin-test">
       <AppContent />
     </BrowserRouter>
   );
