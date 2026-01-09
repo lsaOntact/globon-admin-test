@@ -3,17 +3,12 @@ import "react-calendar/dist/Calendar.css";
 import "./calanderStyle.css";
 import { twMerge } from "tailwind-merge";
 import dayjs from "dayjs";
-import { useState, useRef } from "react";
+import { useState } from "react";
 import "react-circular-progressbar/dist/styles.css";
 
 const FullCalander = () => {
   const today = new Date();
-  const todayYear = today.getFullYear();
-  const todayMonth = today.getMonth();
-
-  const [activeStartDate, setActiveStartDate] = useState(
-    new Date(todayYear, todayMonth, 1)
-  );
+  const [activeStartDate, setActiveStartDate] = useState(today);
 
   const getRoutineProgress = {
     routineDayProgressList: [
@@ -38,49 +33,6 @@ const FullCalander = () => {
         checkedRoutineCount: 0,
       },
     ],
-  };
-
-  // 헬퍼 함수들
-  const getStartOfWeek = (date) => {
-    const start = new Date(date);
-    start.setDate(date.getDate() - date.getDay()); // 일요일
-    start.setHours(0, 0, 0, 0);
-    return start;
-  };
-
-  const getWeekDates = (startOfWeek) =>
-    Array.from({ length: 7 }, (_, i) => {
-      const d = new Date(startOfWeek);
-      d.setDate(startOfWeek.getDate() + i);
-      return d;
-    });
-  // 주 단위로 날짜 생성 (이번 달 기준)
-  const generateWeeksFromToday = (range = 20) => {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0); // 시간 제거
-    const todayWeekStart = getStartOfWeek(today);
-
-    // 이전 20주부터 오늘이 포함된 주까지 (총 21주)
-    return Array.from({ length: range + 1 }, (_, i) => {
-      const offset = i - range; // -20부터 0까지
-      const weekStart = new Date(todayWeekStart);
-      weekStart.setDate(todayWeekStart.getDate() + offset * 7);
-
-      return getWeekDates(weekStart);
-    });
-  };
-
-  const weeks = generateWeeksFromToday();
-
-  // 현재 주 찾기
-  const findCurrentWeekIndex = () => {
-    return weeks.findIndex((week) =>
-      week.some((day) => dayjs(day).isSame(dayjs(today), "day"))
-    );
-  };
-
-  const onWeekChanged = (week) => {
-    console.log("Week changed:", week);
   };
 
   const LeftArrow = ({ fillColor = "#8F8F8F" }) => (
@@ -195,7 +147,15 @@ const FullCalander = () => {
         prev2Label={null}
         next2Label={null}
         prevLabel={<LeftArrow />}
-        nextLabel={<RightArrow />}
+        nextLabel={
+          <RightArrow
+            fillColor={
+              dayjs(activeStartDate).isSame(dayjs(today), "month")
+                ? "#DCDCDC"
+                : undefined
+            }
+          />
+        }
         maxDate={new Date()}
         showNeighboringMonth={false}
         formatDay={() => ""}
@@ -205,9 +165,8 @@ const FullCalander = () => {
           return weekdays[date.getDay()];
         }}
         tileContent={renderTile}
-        defaultActiveStartDate={activeStartDate}
         onActiveStartDateChange={({ activeStartDate }) =>
-          setActiveStartDate(!activeStartDate)
+          setActiveStartDate(activeStartDate)
         }
       />
     </div>
