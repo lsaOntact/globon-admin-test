@@ -1,33 +1,39 @@
 import { Menu, Layout } from "antd";
 import BarChartList from "./component/chart/BarChartList";
-import { useState } from "react";
 import Default from "./component/Default";
 import CardNews from "./component/contentManage/CardNews";
 import Routine from "./component/contentManage/Routine";
 import CalanderPage from "./component/component/CalanderPage";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  useNavigate,
+  useLocation,
+} from "react-router-dom";
 
 const { Sider, Content } = Layout;
 
-function App() {
-  const [selectMenu, setSelectMenu] = useState("item0");
-  const renderContent = () => {
-    switch (selectMenu) {
-      case "item0":
-        return <Default />;
-      case "bar":
-        return <BarChartList />;
-      case "line":
-        return <></>;
-      case "cardNews":
-        return <CardNews />;
-      case "routine":
-        return <Routine />;
-      case "calander":
-        return <CalanderPage />;
-      default:
-        return <></>;
-    }
-  };
+// 메뉴 키와 라우트 경로 매핑
+const routeMap = {
+  item0: "/",
+  bar: "/chart/bar",
+  cardNews: "/content/card-news",
+  routine: "/content/routine",
+  calander: "/component/calander",
+};
+
+// 경로에서 메뉴 키 찾기
+const getMenuKeyFromPath = (pathname) => {
+  const entry = Object.entries(routeMap).find(([_, path]) => path === pathname);
+  return entry ? entry[0] : "item0";
+};
+
+function AppContent() {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const currentMenuKey = getMenuKeyFromPath(location.pathname);
+
   const layoutStyle = {
     width: "100%",
   };
@@ -36,6 +42,7 @@ function App() {
     backgroundColor: "#fff",
     minHeight: "100%",
   };
+
   const siderStyle = {
     width: 256,
     backgroundColor: "#00265bff",
@@ -51,10 +58,6 @@ function App() {
           key: "bar",
           label: "bar",
         },
-        // {
-        //   key: "line",
-        //   label: "line",
-        // },
       ],
     },
     {
@@ -82,14 +85,22 @@ function App() {
       ],
     },
   ];
+
+  const handleMenuClick = (e) => {
+    const path = routeMap[e.key];
+    if (path) {
+      navigate(path);
+    }
+  };
+
   return (
     <Layout style={layoutStyle}>
       <Sider style={siderStyle}>
         <Menu
-          onClick={(e) => setSelectMenu(e.key)}
+          onClick={handleMenuClick}
           style={{ width: "100%" }}
-          defaultSelectedKeys={selectMenu}
-          defaultOpenKeys={["item1", "item2"]}
+          selectedKeys={[currentMenuKey]}
+          defaultOpenKeys={["item1", "item2", "component"]}
           mode="inline"
           items={items}
         />
@@ -97,10 +108,24 @@ function App() {
 
       <Content style={contentStyle}>
         <div style={{ width: "100%", height: "100%", padding: "20px" }}>
-          {renderContent()}
+          <Routes>
+            <Route path="/" element={<Default />} index />
+            <Route path="/chart/bar" element={<BarChartList />} />
+            <Route path="/content/card-news" element={<CardNews />} />
+            <Route path="/content/routine" element={<Routine />} />
+            <Route path="/component/calander" element={<CalanderPage />} />
+          </Routes>
         </div>
       </Content>
     </Layout>
+  );
+}
+
+function App() {
+  return (
+    <BrowserRouter>
+      <AppContent />
+    </BrowserRouter>
   );
 }
 
