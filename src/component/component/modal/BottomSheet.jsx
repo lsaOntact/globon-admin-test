@@ -17,29 +17,15 @@ const BottomSheet = ({
 }) => {
   // 모달 열릴때 외부 스크롤 방지
   useEffect(() => {
-    const originalBodyStyle = document.body.style.overflow;
-
     if (showModal) {
-      const blockScroll = () => {
-        document.documentElement.style.overflow = "hidden";
-        document.body.style.overflow = "hidden";
-      };
+      const originalBodyStyle = document.body.style.overflow;
+      const originalHtmlStyle = document.documentElement.style.overflow;
 
-      blockScroll();
-
-      const interval = setInterval(() => {
-        // 외부에서 풀린 걸 감지하고 다시 막음
-        if (
-          document.body.style.overflow !== "hidden" ||
-          document.documentElement.style.overflow !== "hidden"
-        ) {
-          blockScroll();
-        }
-      }, 500);
+      document.documentElement.style.overflow = "hidden";
+      document.body.style.overflow = "hidden";
 
       return () => {
-        clearInterval(interval);
-        document.documentElement.style.overflow = "";
+        document.documentElement.style.overflow = originalHtmlStyle;
         document.body.style.overflow = originalBodyStyle;
       };
     }
@@ -81,9 +67,10 @@ const BottomSheet = ({
           >
             {/* 헤더 영역 */}
             {showHeader && (
-              <div className=" mt-[30px] px-[20px] flex justify-between items-center">
-                <div className=""></div>
-                <h3 className="font-bold text-lg text-center">{headerTitle}</h3>
+              <div className="mt-[30px] px-[20px] flex justify-between items-center">
+                <h3 className="font-bold text-lg text-center flex-1">
+                  {headerTitle}
+                </h3>
                 <CloseButton onClick={onCloseModal} />
               </div>
             )}
