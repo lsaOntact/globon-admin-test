@@ -3,7 +3,7 @@ import BarChartList from "./component/chart/BarChartList";
 import Default from "./component/Default";
 import CardNews from "./component/contentManage/CardNews";
 import Routine from "./component/contentManage/Routine";
-import CalanderPage from "./component/component/CalanderPage";
+import CalanderPage from "./component/component/calander/CalanderPage";
 import {
   HashRouter,
   Routes,
@@ -11,6 +11,7 @@ import {
   useNavigate,
   useLocation,
 } from "react-router-dom";
+import ModalPage from "./component/component/modal/ModalPage";
 
 const { Sider, Content } = Layout;
 
@@ -21,6 +22,7 @@ const routeMap = {
   cardNews: "/content/card-news",
   routine: "/content/routine",
   calander: "/component/calander",
+  modal: "/component/modal",
 };
 
 // 경로에서 메뉴 키 찾기
@@ -82,6 +84,10 @@ function AppContent() {
           key: "calander",
           label: "캘린더",
         },
+        {
+          key: "modal",
+          label: "모달",
+        },
       ],
     },
   ];
@@ -114,6 +120,7 @@ function AppContent() {
             <Route path="/content/card-news" element={<CardNews />} />
             <Route path="/content/routine" element={<Routine />} />
             <Route path="/component/calander" element={<CalanderPage />} />
+            <Route path="/component/modal" element={<ModalPage />} />
           </Routes>
         </div>
       </Content>

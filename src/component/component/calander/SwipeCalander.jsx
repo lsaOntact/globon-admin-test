@@ -100,7 +100,7 @@ const SwipeCalander = () => {
   };
 
   return (
-    <div className="w-[500px] h-[500px]">
+    <div className="w-[500px] h-[150px]">
       <div className="flex">
         {weekDays.map((day, index) => (
           <div
