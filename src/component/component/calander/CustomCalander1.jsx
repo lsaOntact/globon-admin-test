@@ -4,7 +4,7 @@ import "./calanderStyle.css";
 import { twMerge } from "tailwind-merge";
 import dayjs from "dayjs";
 import { useState } from "react";
-import { RightArrow, LeftArrow, CheckMark } from "../common/common";
+import { RightArrow, LeftArrow } from "../common/common";
 import { CircularProgressbarWithChildren } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 

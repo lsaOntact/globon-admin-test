@@ -71,3 +71,5 @@ export const CloseButton = ({ onClick, iconColor = "#000000", className }) => (
     <CloseIcon fillColor={iconColor} size={24} />
   </button>
 );
+
+export { default as Overlay } from "./Overlay";

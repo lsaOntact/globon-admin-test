@@ -82,7 +82,7 @@ const CustomCalander2 = () => {
   };
 
   return (
-    <div className="week-calendar w-[375px]">
+    <div className="w-[375px]">
       {/* 주간 헤더 */}
       <div className="flex items-center justify-between mb-4">
         <button

@@ -153,7 +153,7 @@ const SwipeCalander = () => {
 
                 return (
                   <div
-                    key={idx}
+                    key={`${i}-${idx}`}
                     onPointerDown={(e) => {
                       // 포인터 이벤트로 처리하여 터치와 마우스 모두 대응
                       e.stopPropagation();
