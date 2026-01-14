@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { twMerge } from "tailwind-merge";
-import { CloseButton } from "../common";
+import { CloseButton } from "../common/common";
 
 const BottomSheet = ({
   showModal,

@@ -2,6 +2,7 @@ import { Space, Typography } from "antd";
 import SwipeCalander from "./SwipeCalander";
 import FullCalander from "./FullCalander";
 import CustomCalander1 from "./CustomCalander1";
+import CustomCalander2 from "./CustomCalander2";
 
 const CalanderPage = () => {
   return (
@@ -29,7 +30,10 @@ const CalanderPage = () => {
         </div>
       </section>
 
-      <section></section>
+      <section>
+        <Typography.Title level={5}>일자형 주간달력</Typography.Title>
+        <CustomCalander2 />
+      </section>
     </Space>
   );
 };

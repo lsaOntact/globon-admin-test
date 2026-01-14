@@ -4,7 +4,7 @@ import "./calanderStyle.css";
 import { twMerge } from "tailwind-merge";
 import dayjs from "dayjs";
 import { useState } from "react";
-import { RightArrow, LeftArrow, CheckMark } from "../common";
+import { RightArrow, LeftArrow, CheckMark } from "../common/common";
 
 const FullCalander = () => {
   const today = new Date();
