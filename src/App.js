@@ -12,6 +12,7 @@ import {
   useLocation,
 } from "react-router-dom";
 import ModalPage from "./component/component/modal/ModalPage";
+import CustomChartList from "./component/chart/CustomChartList";
 
 const { Sider, Content } = Layout;
 
@@ -19,6 +20,7 @@ const { Sider, Content } = Layout;
 const routeMap = {
   item0: "/",
   bar: "/chart/bar",
+  custom: "/chart/custom",
   cardNews: "/content/card-news",
   routine: "/content/routine",
   calander: "/component/calander",
@@ -60,6 +62,7 @@ function AppContent() {
           key: "bar",
           label: "bar",
         },
+        { key: "custom", label: "custom" },
       ],
     },
     {
@@ -117,6 +120,7 @@ function AppContent() {
           <Routes>
             <Route path="/" element={<Default />} index />
             <Route path="/chart/bar" element={<BarChartList />} />
+            <Route path="/chart/custom" element={<CustomChartList />} />
             <Route path="/content/card-news" element={<CardNews />} />
             <Route path="/content/routine" element={<Routine />} />
             <Route path="/component/calander" element={<CalanderPage />} />
