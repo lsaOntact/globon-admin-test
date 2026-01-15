@@ -1,7 +1,35 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { twMerge } from "tailwind-merge";
+import { useEffect } from "react";
 
-const Overlay = ({ show, onClick, delay = 0, className, children }) => {
+const Overlay = ({
+  show,
+  onClick,
+  isBackdropClickable = true,
+  delay = 0,
+  className,
+  children,
+}) => {
+  // 모달 열릴때 외부 스크롤 방지
+  useEffect(() => {
+    if (show) {
+      const originalBodyStyle = document.body.style.overflow;
+      const originalHtmlStyle = document.documentElement.style.overflow;
+
+      document.documentElement.style.overflow = "hidden";
+      document.body.style.overflow = "hidden";
+
+      return () => {
+        document.documentElement.style.overflow = originalHtmlStyle;
+        document.body.style.overflow = originalBodyStyle;
+      };
+    }
+  }, [show]);
+
+  const onCloseModal = () => {
+    if (!isBackdropClickable) return;
+    if (onClick) onClick();
+  };
   return (
     <AnimatePresence>
       {show && (
@@ -16,7 +44,7 @@ const Overlay = ({ show, onClick, delay = 0, className, children }) => {
           animate="visible"
           exit="hidden"
           transition={{ duration: 0.3, delay, ease: "easeInOut" }}
-          onClick={onClick}
+          onClick={onCloseModal}
         >
           {children}
         </motion.div>

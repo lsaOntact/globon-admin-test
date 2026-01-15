@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { motion } from "framer-motion";
 import { twMerge } from "tailwind-merge";
 import { CloseButton } from "../common/common";
@@ -6,8 +5,6 @@ import Overlay from "../common/Overlay";
 
 const BottomSheet = ({
   showModal,
-  setShowModal,
-  isBackdropClickable = true,
   children,
   showHeader,
   headerTitle,
@@ -15,29 +12,8 @@ const BottomSheet = ({
   className,
   contentClassName,
 }) => {
-  // 모달 열릴때 외부 스크롤 방지
-  useEffect(() => {
-    if (showModal) {
-      const originalBodyStyle = document.body.style.overflow;
-      const originalHtmlStyle = document.documentElement.style.overflow;
-
-      document.documentElement.style.overflow = "hidden";
-      document.body.style.overflow = "hidden";
-
-      return () => {
-        document.documentElement.style.overflow = originalHtmlStyle;
-        document.body.style.overflow = originalBodyStyle;
-      };
-    }
-  }, [showModal]);
-
-  const onCloseModal = () => {
-    if (!isBackdropClickable) return;
-    setShowModal(false);
-    if (onClose) onClose();
-  };
   return (
-    <Overlay show={showModal} onClick={onCloseModal}>
+    <Overlay show={showModal} onClick={onClose}>
       <motion.div
         key="bottom-sheet"
         variants={modalVariants}
@@ -57,7 +33,7 @@ const BottomSheet = ({
             <h3 className="font-bold text-lg text-center flex-1">
               {headerTitle}
             </h3>
-            <CloseButton onClick={onCloseModal} />
+            <CloseButton onClick={onClose} />
           </div>
         )}
 
@@ -79,24 +55,23 @@ export default BottomSheet;
 
 const modalVariants = {
   initial: {
-    y: "100vh",
-    opacity: 0,
+    y: "100%",
   },
   show: {
-    opacity: 1,
     y: "0px",
     transition: {
-      delay: 0.05,
-      type: "spring",
+      // delay: 0.05,
+      type: "easeIn",
       damping: 60,
       stiffness: 500,
     },
   },
   hide: {
-    opacity: 0,
-    y: "100vh",
+    y: "100%",
     transition: {
-      type: "easeIn",
+      type: "easeOut",
+      damping: 60,
+      stiffness: 500,
     },
   },
 };

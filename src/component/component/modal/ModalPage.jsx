@@ -41,7 +41,7 @@ const ModalPage = () => {
           </button>
           <BottomSheet
             showModal={openBottomSheet}
-            setShowModal={setOpenBottomSheet}
+            onClose={() => setOpenBottomSheet(false)}
             isShowCloseButton
             showHeader
             headerTitle={"복용 관리"}
@@ -75,7 +75,7 @@ const ModalPage = () => {
           <Popup
             showModal={openPopup}
             onClose={() => setOpenPopup(false)}
-            headTitle={"오늘 기록된 몸무게 있습니다."}
+            headTitle={"오늘 기록된 몸무게가 있습니다."}
             subTitle={"이전 기록을 유지할까요?"}
             buttonOption={{
               type: "multi",

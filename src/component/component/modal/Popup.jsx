@@ -1,10 +1,8 @@
-import React from "react";
 import Overlay from "../common/Overlay";
 import { motion } from "framer-motion";
 
 const Popup = ({
   showModal,
-  setShowModal,
   isBackdropClickable = true,
   headTitle,
   subTitle,
@@ -15,7 +13,6 @@ const Popup = ({
     confirmText: "확인",
     cancelText: "취소",
   },
-  contentClassName,
 }) => {
   return (
     <Overlay show={showModal} onClick={onClose}>
@@ -68,23 +65,27 @@ const Popup = ({
 };
 
 export default Popup;
+
 const popupVariants = {
   initial: {
+    scale: 0.2,
     opacity: 0,
   },
   show: {
     opacity: 1,
+    scale: 1,
     transition: {
-      delay: 0.05,
       type: "spring",
-      damping: 60,
+      damping: 25,
       stiffness: 500,
     },
   },
   hide: {
+    scale: 0.2,
     opacity: 0,
     transition: {
-      type: "easeIn",
+      duration: 0.3,
+      ease: "spring",
     },
   },
 };
