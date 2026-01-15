@@ -1,11 +1,11 @@
 {
   "files": {
-    "main.css": "/globon-admin-test/static/css/main.ca08b848.css",
-    "main.js": "/globon-admin-test/static/js/main.c5dd697e.js",
+    "main.css": "/globon-admin-test/static/css/main.67121228.css",
+    "main.js": "/globon-admin-test/static/js/main.ec2b0ddf.js",
     "index.html": "/globon-admin-test/index.html"
   },
   "entrypoints": [
-    "static/css/main.ca08b848.css",
-    "static/js/main.c5dd697e.js"
+    "static/css/main.67121228.css",
+    "static/js/main.ec2b0ddf.js"
   ]
 }
