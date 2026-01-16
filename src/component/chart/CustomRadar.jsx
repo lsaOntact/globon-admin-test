@@ -1,9 +1,26 @@
-import { useEffect, useRef } from "react";
-import Chart from "chart.js/auto";
+import { Radar } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  RadialLinearScale,
+  PointElement,
+  LineElement,
+  Filler,
+  Tooltip,
+  Legend,
+} from "chart.js";
+
+// Chart.js 컴포넌트 등록
+ChartJS.register(
+  RadialLinearScale,
+  PointElement,
+  LineElement,
+  Filler,
+  Tooltip,
+  Legend
+);
 
 function CustomRadar({ ranges, realValues }) {
-  const chartRef = useRef(null);
-  const chartInstance = useRef(null);
+  const labels = Object.keys(ranges);
 
   // 값의 상태 판단 (고속/평균/저속)
   const getValueStatus = (value, category) => {
@@ -20,118 +37,85 @@ function CustomRadar({ ranges, realValues }) {
     }
   };
 
-  // 각도 기반 위치 계산
-  const getStatusPosition = (index, total) => {
-    const angle = Math.PI / 2 - (2 * Math.PI * index) / total;
-    const radius = 180; // 차트 중심에서의 거리
-    const centerX = 200; // 컨테이너 중심 x
-    const centerY = 220; // 컨테이너 중심 y
+  // 각 포인트의 색상 배열 생성
+  const pointColors = labels.map((label) => {
+    const value = realValues[label];
+    return getValueStatus(value, label).color;
+  });
 
-    return {
-      x: centerX + Math.cos(angle) * radius,
-      y: centerY - Math.sin(angle) * radius,
-    };
+  const data = {
+    labels: labels,
+    datasets: [
+      {
+        label: "실제값",
+        data: Object.values(realValues),
+        fill: true,
+        backgroundColor: "rgba(79, 192, 155, 0.2)",
+        borderColor: "#4FC09B",
+        borderWidth: 2,
+        pointBackgroundColor: pointColors, // 각 포인트마다 다른 색상
+        pointBorderColor: "#fff",
+        pointBorderWidth: 2,
+        pointRadius: 5,
+        pointHoverRadius: 6,
+      },
+    ],
   };
 
-  const labels = Object.keys(ranges);
-
-  useEffect(() => {
-    if (chartRef.current) {
-      const ctx = chartRef.current?.getContext("2d");
-
-      if (chartInstance.current) {
-        chartInstance.current?.destroy();
-      }
-
-      const data = {
-        labels: labels,
-        datasets: [
-          {
-            label: "실제값",
-            data: Object.values(realValues),
-            fill: true,
-            backgroundColor: "rgba(79, 192, 155, 0.2)",
-            borderColor: "#4FC09B",
-            borderWidth: 2,
-            pointBackgroundColor: "#4FC09B",
-            pointBorderColor: "#fff",
-            pointBorderWidth: 2,
-            pointRadius: 5,
-            pointHoverRadius: 6,
+  const options = {
+    devicePixelRatio: 2,
+    maintainAspectRatio: true,
+    aspectRatio: 1,
+    plugins: {
+      legend: { display: false },
+      tooltip: { enabled: false },
+      datalabels: { display: false },
+    },
+    scales: {
+      r: {
+        beginAtZero: true,
+        min: 0,
+        max: 100,
+        ticks: {
+          display: false,
+          stepSize: 20,
+        },
+        pointLabels: {
+          font: {
+            size: 14,
+            weight: 500,
+            family: "Pretendard",
           },
-        ],
-      };
-
-      const config = {
-        type: "radar",
-        data: data,
-        options: {
-          devicePixelRatio: 2,
-          maintainAspectRatio: true,
-          aspectRatio: 1,
-          plugins: {
-            legend: { display: false },
-            tooltip: { enabled: false },
+          color: (context) => {
+            const index = context.index;
+            const label = labels[index];
+            const value = realValues[label];
+            const { color } = getValueStatus(value, label);
+            return color;
           },
-          scales: {
-            r: {
-              beginAtZero: true,
-              min: 0,
-              max: 100,
-              ticks: {
-                display: false,
-                stepSize: 20,
-              },
-              pointLabels: {
-                font: {
-                  size: 14,
-                  weight: 500,
-                  family: "Pretendard",
-                },
-                color: "#333",
-                padding: 20,
-              },
-              grid: {
-                color: "#E0E0E0",
-                lineWidth: 1,
-              },
-              angleLines: {
-                color: "#E0E0E0",
-                lineWidth: 1,
-              },
-            },
+          padding: 20,
+          callback: (value, index) => {
+            const label = labels[index];
+            const realValue = realValues[label];
+            const { status } = getValueStatus(realValue, label);
+            return [label, status]; // 배열로 반환하면 멀티라인으로 표시
           },
         },
-      };
-      if (ctx) {
-        chartInstance.current = new Chart(ctx, config);
-      }
-    }
-  }, [ranges, realValues]);
+        grid: {
+          color: "#E0E0E0",
+          lineWidth: 1,
+        },
+        angleLines: {
+          color: "#E0E0E0",
+          lineWidth: 1,
+        },
+      },
+    },
+  };
 
   return (
-    <div className="relative w-[400px] h-[400px]">
-      <canvas ref={chartRef} />
-      {labels.map((label, index) => {
-        const value = realValues[label];
-        const { status, color } = getValueStatus(value, label);
-        const position = getStatusPosition(index, labels.length);
-
-        return (
-          <div
-            key={label + index}
-            className="absolute text-sm font-medium whitespace-nowrap"
-            style={{
-              color,
-              left: `${position.x}px`,
-              top: `${position.y}px`,
-              transform: "translate(-50%, -50%)",
-            }}
-          >
-            {status}
-          </div>
-        );
-      })}
+    <div className="w-[400px] h-[400px]">
+      <Radar data={data} options={options} />
     </div>
   );
 }
