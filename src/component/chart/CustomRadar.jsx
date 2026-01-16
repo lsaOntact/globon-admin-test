@@ -50,14 +50,14 @@ function CustomRadar({ ranges, realValues }) {
         label: "실제값",
         data: Object.values(realValues),
         fill: true,
-        backgroundColor: "rgba(79, 192, 155, 0.2)",
+        backgroundColor: "rgba(79, 192, 155, 0.15)",
         borderColor: "#4FC09B",
         borderWidth: 2,
         pointBackgroundColor: pointColors, // 각 포인트마다 다른 색상
         pointBorderColor: "#fff",
-        pointBorderWidth: 2,
-        pointRadius: 5,
-        pointHoverRadius: 6,
+        pointBorderWidth: 3,
+        pointRadius: 6,
+        pointHoverRadius: 8,
       },
     ],
   };
@@ -78,7 +78,7 @@ function CustomRadar({ ranges, realValues }) {
         max: 100,
         ticks: {
           display: false,
-          stepSize: 20,
+          stepSize: 50,
         },
         pointLabels: {
           font: {
@@ -86,27 +86,15 @@ function CustomRadar({ ranges, realValues }) {
             weight: 500,
             family: "Pretendard",
           },
-          color: (context) => {
-            const index = context.index;
-            const label = labels[index];
-            const value = realValues[label];
-            const { color } = getValueStatus(value, label);
-            return color;
-          },
+          color: "#767C88",
           padding: 20,
-          callback: (value, index) => {
-            const label = labels[index];
-            const realValue = realValues[label];
-            const { status } = getValueStatus(realValue, label);
-            return [label, status]; // 배열로 반환하면 멀티라인으로 표시
-          },
         },
         grid: {
-          color: "#E0E0E0",
+          color: "#E2E6ED",
           lineWidth: 1,
         },
         angleLines: {
-          color: "#E0E0E0",
+          color: "#E2E6ED",
           lineWidth: 1,
         },
       },
@@ -114,8 +102,24 @@ function CustomRadar({ ranges, realValues }) {
   };
 
   return (
-    <div className="w-[400px] h-[400px]">
-      <Radar data={data} options={options} />
+    <div className="flex flex-col items-center">
+      <div className="w-[400px] h-[400px]">
+        <Radar data={data} options={options} />
+      </div>
+      <div className="flex gap-4 mt-4">
+        <div className="flex items-center gap-2">
+          <div className="w-3 h-3 rounded-full bg-[#4FC09B]"></div>
+          <span className="text-sm">저속노화</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <div className="w-3 h-3 rounded-full bg-[#FFA726]"></div>
+          <span className="text-sm">평균노화</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <div className="w-3 h-3 rounded-full bg-[#EF5757]"></div>
+          <span className="text-sm">가속노화</span>
+        </div>
+      </div>
     </div>
   );
 }

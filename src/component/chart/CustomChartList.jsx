@@ -1,6 +1,7 @@
-import { Typography } from "antd";
+import { Space, Typography } from "antd";
 import CustomRadar from "./CustomRadar";
 import SwipeLineChart from "./SwipeLineChart";
+import CustomBarChart from "./CustomBarChart";
 
 const CustomChartList = () => {
   // 임의의 데이터
@@ -46,14 +47,32 @@ const CustomChartList = () => {
     "관절 · 뼈": 51,
   };
 
+  // 임시 샘플 데이터
+  const sampleData = [
+    { rank: 1, diseaseCode: "C16", diseaseName: "위암" },
+    { rank: 2, diseaseCode: "C34", diseaseName: "폐암" },
+    { rank: 3, diseaseCode: "C18", diseaseName: "대장암" },
+    { rank: 4, diseaseCode: "C22", diseaseName: "간암" },
+    { rank: 5, diseaseCode: "C73", diseaseName: "갑상선암" },
+  ];
+
   return (
-    <>
-      <Typography.Title level={5}>custom radar chart</Typography.Title>
-      <CustomRadar ranges={ranges} realValues={realValues} />
-      <Typography.Title level={5}>custom line chart</Typography.Title>
-      <p>❛ ֊ ❛가로로 스크롤 해보세요.</p>
-      <SwipeLineChart />
-    </>
+    <Space size={"large"} align="start">
+      <div>
+        <Typography.Title level={5}>custom radar chart</Typography.Title>
+        <CustomRadar ranges={ranges} realValues={realValues} />
+      </div>
+      <div>
+        <Typography.Title level={5}>custom line chart</Typography.Title>
+        <p>가로로 스크롤 해보세요.</p>
+        <SwipeLineChart />
+      </div>
+
+      <div>
+        <Typography.Title level={5}>custom bar chart</Typography.Title>
+        <CustomBarChart cancerRankList={sampleData} />
+      </div>
+    </Space>
   );
 };
 
